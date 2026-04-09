@@ -1,0 +1,52 @@
+# Default Tranche Templates
+# Common tranche structures for quick configuration
+
+senior_term_a:
+  tranche_type: senior_term_a
+  interest_rate: 0.06  # SOFR + 200bps
+  amortization_rate: 0.05  # 5% p.a. (Term A typically 5-year amort)
+  maturity_years: 5.0
+  cash_sweep_rate: 0.75
+  pik_toggle: false
+  pik_rate: 0.0
+  commitment_fee: 0.0
+
+senior_term_b:
+  tranche_type: senior_term_b
+  interest_rate: 0.075  # SOFR + 350bps
+  amortization_rate: 0.01  # 1% p.a. (Term B typically 1% amort)
+  maturity_years: 7.0
+  cash_sweep_rate: 0.50
+  pik_toggle: false
+  pik_rate: 0.0
+  commitment_fee: 0.0
+
+mezzanine:
+  tranche_type: mezzanine
+  interest_rate: 0.10
+  amortization_rate: 0.0  # Bullet payment
+  maturity_years: 5.0
+  cash_sweep_rate: 0.0
+  pik_toggle: true
+  pik_rate: 0.02
+  commitment_fee: 0.0
+
+high_yield:
+  tranche_type: high_yield
+  interest_rate: 0.09
+  amortization_rate: 0.0  # Bullet
+  maturity_years: 6.0
+  cash_sweep_rate: 0.0
+  pik_toggle: false
+  pik_rate: 0.0
+  commitment_fee: 0.0
+
+revolver:
+  tranche_type: revolver
+  interest_rate: 0.07  # SOFR + 300bps
+  amortization_rate: 0.0
+  maturity_years: 5.0
+  cash_sweep_rate: 0.0
+  pik_toggle: false
+  pik_rate: 0.0
+  commitment_fee: 0.005  # 50bps on undrawn
