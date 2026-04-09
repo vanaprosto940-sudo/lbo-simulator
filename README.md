@@ -191,6 +191,24 @@ pytest tests/test_lbo_engine.py -v
 
 ---
 
+## 🚀 Publishing to GitHub
+
+To push this repository to GitHub:
+
+```bash
+# Make sure you have a GitHub repository created at:
+# https://github.com/vanaprosto940-sudo/lbo-simulator
+
+# Push to GitHub
+git push -u origin main
+
+# After pushing, the GitHub Actions CI will automatically:
+# - Run linters (black, isort, flake8, mypy)
+# - Execute all tests
+# - Build the package
+# - Check package distribution
+```
+
 ## 📊 Configuration
 
 All inputs are validated via Pydantic v2 schemas. Main config file:
