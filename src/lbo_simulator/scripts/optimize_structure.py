@@ -68,16 +68,16 @@ def main() -> None:
         base_results.remaining_debt_at_exit,
     )
 
-    print(f"\n📊 Base Case:")
+    print("\nBase Case:")
     print(f"  Equity IRR:  {base_results.irr:.1%}")
     print(f"  MOIC:        {base_results.moic:.2f}x")
     if base_breaches:
-        print(f"  ⚠️  Breaches: {len(base_breaches)}")
+        print(f"  Breaches: {len(base_breaches)}")
     else:
-        print(f"  ✅ Covenants: Compliant")
+        print("  Covenants: Compliant")
 
     # Optimize
-    print(f"\n⚙️  Optimizing capital structure...")
+    print("\nOptimizing capital structure...")
     optimizer = CapitalStructureOptimizer(config)
 
     if args.objective == "max_irr":
@@ -96,16 +96,16 @@ def main() -> None:
     print(f"  Optimal MOIC: {result.optimal_moic:.2f}x")
     print(f"  Blended WACC: {result.blended_cost_of_capital:.1%}")
 
-    print(f"\n  Optimal Tranche Sizes:")
+    print("\n  Optimal Tranche Sizes:")
     for name, size in result.optimal_tranche_sizes.items():
         print(f"    {name}: ${size / 1e6:.1f}M")
 
-    print(f"\n  Constraint Binding:")
+    print("\n  Constraint Binding:")
     for constraint, is_binding in result.constraint_binding_report.items():
         status = "BINDING" if is_binding else "Not binding"
         print(f"    {constraint}: {status}")
 
-    print(f"\n  Sensitivity Analysis:")
+    print("\n  Sensitivity Analysis:")
     print(f"    {'Leverage Shift':>15} | {'IRR':>8} | {'MOIC':>8}")
     print(f"    {'-'*15}-+-{'-'*8}-+-{'-'*8}")
     for row in result.sensitivity_table[:5]:

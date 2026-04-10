@@ -183,7 +183,7 @@ class LBOEngine:
         equity_flows[-1] += exit_equity_value
 
         # Calculate returns
-        dates = list(range(len(equity_flows)))
+        dates: list[float] = [float(i) for i in range(len(equity_flows))]
         irr = xirr(equity_flows, dates)
 
         total_equity_returned = sum(equity_distributions_list) + exit_equity_value

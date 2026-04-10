@@ -77,9 +77,9 @@ class SyntheticCompanyGenerator(DataProvider):
         Returns:
             CompanyProfileSchema with realistic parameters.
         """
-        sector = sector if sector in SECTOR_PROFILES else "Other"
-        profile = SECTOR_PROFILES.get(
-            sector,
+        sector_key = sector if sector in SECTOR_PROFILES else "Other"
+        profile: dict = SECTOR_PROFILES.get(
+            sector_key,
             {
                 "initial_ebitda_margin": 0.15,
                 "revenue_growth": [0.05] * 5,
@@ -96,15 +96,15 @@ class SyntheticCompanyGenerator(DataProvider):
 
         return CompanyProfileSchema(
             name=company_name,
-            sector=sector,
+            sector=sector_key,  # type: ignore[arg-type]
             initial_revenue=initial_revenue,
             initial_ebitda_margin=ebitda_margin,
             initial_depreciation=initial_revenue * 0.03,
-            revenue_growth_rates=profile["revenue_growth"],
-            margin_expansion_bps=profile["margin_expansion_bps"],
-            capex_pct_revenue=profile["capex_pct_revenue"],
-            nwc_pct_revenue=profile["nwc_pct_revenue"],
-            tax_rate=profile["tax_rate"],
+            revenue_growth_rates=profile["revenue_growth"],  # type: ignore[arg-type]
+            margin_expansion_bps=profile["margin_expansion_bps"],  # type: ignore[arg-type]
+            capex_pct_revenue=profile["capex_pct_revenue"],  # type: ignore[arg-type]
+            nwc_pct_revenue=profile["nwc_pct_revenue"],  # type: ignore[arg-type]
+            tax_rate=profile["tax_rate"],  # type: ignore[arg-type]
         )
 
     def get_macro_data(self) -> dict:

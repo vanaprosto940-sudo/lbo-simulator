@@ -6,7 +6,6 @@ import argparse
 import sys
 from pathlib import Path
 
-from lbo_simulator.data.synthetic import SyntheticCompanyGenerator
 from lbo_simulator.models.covenants import CovenantEngine
 from lbo_simulator.models.lbo_engine import LBOEngine
 from lbo_simulator.reporting.excel_export import ExcelExporter
@@ -94,7 +93,7 @@ def main() -> None:
     results.covenant_breaches = breaches
 
     # Print summary
-    print(f"\n📊 Results Summary:")
+    print("\nResults Summary:")
     print(f"  Equity IRR:        {results.irr:.1%}")
     print(f"  MOIC:              {results.moic:.2f}x")
     print(f"  Payback Period:    {results.payback_period_years:.1f} years")
@@ -110,7 +109,7 @@ def main() -> None:
                 f"  Year {b}: {b.covenant_name} = {b.actual_value:.2f} vs {b.threshold_value:.2f} ({b.severity})"
             )
     else:
-        print(f"\n✅ All covenants compliant")
+        print("\nAll covenants compliant")
 
     # Export
     if args.output:

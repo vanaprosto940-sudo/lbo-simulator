@@ -8,13 +8,8 @@ import numpy as np
 from loguru import logger
 from scipy.optimize import minimize
 
-from lbo_simulator.models.covenants import CovenantEngine
 from lbo_simulator.models.lbo_engine import LBOEngine
-from lbo_simulator.models.schemas import (
-    CovenantThresholdsSchema,
-    LBOConfigSchema,
-    LBOResultsSchema,
-)
+from lbo_simulator.models.schemas import LBOConfigSchema, LBOResultsSchema
 
 
 @dataclass
@@ -77,7 +72,6 @@ class CapitalStructureOptimizer:
         logger.info("Starting IRR maximization...")
 
         n_tranches = len(self.config.tranches)
-        total_debt_available = sum(t.principal for t in self.config.tranches)
 
         # Objective: negative IRR (since we minimize)
         def objective(x: np.ndarray) -> float:
@@ -218,8 +212,6 @@ class CapitalStructureOptimizer:
     def _run_sensitivity_analysis(self, n_points: int = 5) -> list[dict]:
         """Run sensitivity of IRR to leverage shifts."""
         base_config = self.config
-        base_engine = LBOEngine(base_config)
-        base_results = base_engine.run()
 
         sensitivity = []
         leverage_shifts = np.linspace(-0.3, 0.3, n_points)

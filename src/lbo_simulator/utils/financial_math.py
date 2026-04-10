@@ -5,7 +5,9 @@ from __future__ import annotations
 import numpy as np
 
 
-def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> float:
+def xirr(
+    cash_flows: list[float], dates: list[float], guess: float = 0.1
+) -> float:
     """Calculate Internal Rate of Return using XNPV method.
 
     Args:
@@ -21,7 +23,9 @@ def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> flo
 
     # NPV function for a given rate
     def npv(rate: float) -> float:
-        return sum(cf / (1 + rate) ** t for cf, t in zip(cash_flows, dates))
+        return sum(  # type: ignore[no-any-return]
+            cf / (1 + rate) ** t for cf, t in zip(cash_flows, dates)
+        )
 
     # Newton-Raphson solver
     rate = guess
@@ -38,9 +42,14 @@ def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> flo
 
     # Fallback to numpy if Newton-Raphson fails
     try:
-        return float(np.irr(cash_flows)[0])
+        import numpy as np
+
+        result = np.irr(cash_flows)  # type: ignore[attr-defined]
+        if result is not None and len(result) > 0:
+            return float(result[0])
     except Exception:
-        return rate
+        pass
+    return rate
 
 
 def moic(total_distributions: float, total_invested: float) -> float:
@@ -115,8 +124,10 @@ def break_even_exit_multiple(
     for _ in range(100):
         mid = (low + high) / 2
         # Construct cash flows: initial investment + annual flows + exit value
-        test_cfs = [-equity_invested] + annual_cash_flows[:-1] + [annual_cash_flows[-1] + mid]
-        test_dates = list(range(len(test_cfs)))
+        test_cfs: list[float] = (
+            [-equity_invested] + annual_cash_flows[:-1] + [annual_cash_flows[-1] + mid]
+        )
+        test_dates: list[float] = [float(i) for i in range(len(test_cfs))]
 
         try:
             irr = xirr(test_cfs, test_dates)

@@ -76,7 +76,7 @@ class CovenantEngine:
                         covenant_name="Total Leverage Ratio",
                         actual_value=leverage_ratio,
                         threshold_value=self.thresholds.max_total_leverage,
-                        severity=severity,
+                        severity=severity,  # type: ignore[arg-type]
                         remediation_applied=self._suggest_remediation("leverage"),
                     )
                     breaches.append(breach)
@@ -98,7 +98,7 @@ class CovenantEngine:
                         covenant_name="Fixed Charge Coverage",
                         actual_value=fccr,
                         threshold_value=self.thresholds.min_fixed_charge_coverage,
-                        severity=severity,
+                        severity=severity,  # type: ignore[arg-type]
                         remediation_applied=self._suggest_remediation("fccr"),
                     )
                     breaches.append(breach)
@@ -119,7 +119,7 @@ class CovenantEngine:
                         covenant_name="Interest Coverage",
                         actual_value=icr,
                         threshold_value=self.thresholds.min_interest_coverage,
-                        severity=severity,
+                        severity=severity,  # type: ignore[arg-type]
                         remediation_applied=self._suggest_remediation("icr"),
                     )
                     breaches.append(breach)

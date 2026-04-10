@@ -119,7 +119,6 @@ class TestLBOEngine:
         """Create a config with declining EBITDA."""
         from lbo_simulator.models.schemas import (
             CompanyProfileSchema,
-            CovenantThresholdsSchema,
             DebtTrancheSchema,
             ExitAssumptionsSchema,
             LBOConfigSchema,
