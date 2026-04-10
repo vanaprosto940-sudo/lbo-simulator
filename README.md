@@ -290,6 +290,6 @@ Contributions are welcome! Please:
 
 ## 📧 Author
 
-**vanaprosto940-sudo**
+**Belous Ivan**
 
 Built with ❤️ for the quantitative finance community.
