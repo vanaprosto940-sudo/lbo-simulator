@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import numpy as np
-
 
 def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> float:
     """Calculate Internal Rate of Return using XNPV method.
@@ -40,9 +38,9 @@ def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> flo
 
     # Fallback to numpy if Newton-Raphson fails
     try:
-        import numpy as np
+        import numpy as _np
 
-        result = np.irr(cash_flows)  # type: ignore[attr-defined]
+        result = _np.irr(cash_flows)  # type: ignore[attr-defined]
         if result is not None and len(result) > 0:
             return float(result[0])
     except Exception:

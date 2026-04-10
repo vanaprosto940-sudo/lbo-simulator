@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 100
+extend-ignore =
+    # Allow longer lines (black handles formatting)
+    E501,
+    # Allow redefinition of unused (np in fallback)
+    F811,
+per-file-ignores =
+    # Allow unused imports in __init__.py (re-exports)
+    src/lbo_simulator/__init__.py: F401
+    tests/conftest.py: F401
