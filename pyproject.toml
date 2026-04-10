@@ -48,6 +48,7 @@ dev = [
     "flake8>=6.1",
     "mypy>=1.5",
     "pre-commit>=3.4",
+    "types-PyYAML>=6.0",
 ]
 optimization = [
     "pulp>=2.7",
