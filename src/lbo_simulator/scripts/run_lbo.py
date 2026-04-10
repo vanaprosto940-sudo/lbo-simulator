@@ -19,7 +19,8 @@ def main() -> None:
     """Run LBO simulation from CLI."""
     parser = argparse.ArgumentParser(description="LBO Simulator CLI")
     parser.add_argument(
-        "--config", "-c",
+        "--config",
+        "-c",
         type=str,
         default="config/lbo_config.yaml",
         help="Path to YAML config file",
@@ -38,7 +39,8 @@ def main() -> None:
         help="Simulation mode",
     )
     parser.add_argument(
-        "--output", "-o",
+        "--output",
+        "-o",
         type=str,
         default=None,
         help="Output report path (PDF or Excel)",
@@ -51,7 +53,8 @@ def main() -> None:
         help="Export format",
     )
     parser.add_argument(
-        "--verbose", "-v",
+        "--verbose",
+        "-v",
         action="store_true",
         help="Enable verbose logging",
     )
@@ -103,7 +106,9 @@ def main() -> None:
     if breaches:
         print(f"\n⚠️  Covenant Breaches: {len(breaches)}")
         for b in breaches:
-            print(f"  Year {b}: {b.covenant_name} = {b.actual_value:.2f} vs {b.threshold_value:.2f} ({b.severity})")
+            print(
+                f"  Year {b}: {b.covenant_name} = {b.actual_value:.2f} vs {b.threshold_value:.2f} ({b.severity})"
+            )
     else:
         print(f"\n✅ All covenants compliant")
 

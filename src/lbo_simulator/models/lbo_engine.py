@@ -77,7 +77,9 @@ class LBOEngine:
         total_amort = 0.0
 
         # Equity cash flow tracking
-        equity_flows = [-self.config.sources_and_uses.equity_contribution]  # t=0: negative investment
+        equity_flows = [
+            -self.config.sources_and_uses.equity_contribution
+        ]  # t=0: negative investment
         equity_distributions_list: list[float] = []
 
         # Run year-by-year simulation
@@ -125,7 +127,10 @@ class LBOEngine:
                     DebtScheduleYearSchema(
                         year=year,
                         tranche_name=tranche.name,
-                        beginning_balance=tranche.outstanding_balance + result["mandatory_amortization"] + result["optional_sweep"] - result["pik_accrued"],
+                        beginning_balance=tranche.outstanding_balance
+                        + result["mandatory_amortization"]
+                        + result["optional_sweep"]
+                        - result["pik_accrued"],
                         interest_paid=result["interest_paid"],
                         mandatory_amortization=result["mandatory_amortization"],
                         optional_sweep=result["optional_sweep"],

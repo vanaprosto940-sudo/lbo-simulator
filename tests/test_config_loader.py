@@ -82,7 +82,10 @@ class TestConfigLoader:
         reloaded = load_config(output_path)
 
         assert reloaded.company.name == sample_config.company.name
-        assert reloaded.exit_assumptions.hold_period_years == sample_config.exit_assumptions.hold_period_years
+        assert (
+            reloaded.exit_assumptions.hold_period_years
+            == sample_config.exit_assumptions.hold_period_years
+        )
 
     def test_file_not_found(self):
         """Test error on missing config file."""

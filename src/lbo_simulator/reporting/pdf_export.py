@@ -30,12 +30,18 @@ class PDFExporter:
 
         try:
             from weasyprint import HTML
+
             HTML(string=html).write_pdf(str(output_path))
-        except ImportError:
-            # Fallback: save as HTML if weasyprint not installed
+        except (ImportError, OSError) as e:
+            # WeasyPrint requires GTK libraries which may not be installed
+            # Fallback: save as HTML instead
             output_path = output_path.with_suffix(".html")
-            with open(output_path, "w") as f:
+            with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html)
+            print(f"⚠️  WeasyPrint unavailable ({type(e).__name__}), saved as HTML instead.")
+            print(
+                f"   To enable PDF export on Windows, install GTK: https://github.com/tschoonj/GTK-for-Windows-Runtime-Installer"
+            )
 
         return output_path
 
@@ -204,9 +210,11 @@ class PDFExporter:
         """
 
         if not r.covenant_breaches:
-            html += '<p style="color: #006400; font-weight: bold;">✓ No covenant breaches detected</p>'
+            html += (
+                '<p style="color: #006400; font-weight: bold;">✓ No covenant breaches detected</p>'
+            )
         else:
-            html += '<table><tr><th>Year</th><th>Covenant</th><th>Actual</th><th>Threshold</th><th>Severity</th></tr>'
+            html += "<table><tr><th>Year</th><th>Covenant</th><th>Actual</th><th>Threshold</th><th>Severity</th></tr>"
             for b in r.covenant_breaches:
                 row_class = "breach-critical" if b.severity == "critical" else "breach-warning"
                 html += f"""
@@ -218,7 +226,7 @@ class PDFExporter:
                         <td>{b.severity.upper()}</td>
                     </tr>
                 """
-            html += '</table>'
+            html += "</table>"
 
         html += f"""
             <h2>Debt Summary</h2>

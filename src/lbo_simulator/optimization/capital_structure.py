@@ -53,9 +53,7 @@ class CapitalStructureOptimizer:
 
     def __init__(self, config: LBOConfigSchema) -> None:
         self.config = config
-        self.sector_multiplier = self.SECTOR_MULTIPLIERS.get(
-            config.company.sector, 5.0
-        )
+        self.sector_multiplier = self.SECTOR_MULTIPLIERS.get(config.company.sector, 5.0)
         self.debt_capacity = (
             config.company.initial_revenue
             * config.company.initial_ebitda_margin
@@ -146,8 +144,7 @@ class CapitalStructureOptimizer:
 
         return OptimizationResult(
             optimal_tranche_sizes={
-                self.config.tranches[i].name: float(result.x[i])
-                for i in range(n_tranches)
+                self.config.tranches[i].name: float(result.x[i]) for i in range(n_tranches)
             },
             optimal_irr=optimal_results.irr,
             optimal_moic=optimal_results.moic,
@@ -162,9 +159,7 @@ class CapitalStructureOptimizer:
         """Build a new config with adjusted tranche sizes."""
         new_tranches = []
         for i, t in enumerate(self.config.tranches):
-            new_tranches.append(
-                t.model_copy(update={"principal": float(weights[i])})
-            )
+            new_tranches.append(t.model_copy(update={"principal": float(weights[i])}))
 
         # Recalculate equity to balance sources/uses
         total_debt = sum(weights)
@@ -194,13 +189,10 @@ class CapitalStructureOptimizer:
             "non_negative": all(w > 0 for w in weights),
         }
 
-    def _calculate_wacc(
-        self, config: LBOConfigSchema, results: LBOResultsSchema
-    ) -> float:
+    def _calculate_wacc(self, config: LBOConfigSchema, results: LBOResultsSchema) -> float:
         """Calculate blended cost of capital."""
-        total_capital = (
-            config.sources_and_uses.equity_contribution
-            + sum(t.principal for t in config.tranches)
+        total_capital = config.sources_and_uses.equity_contribution + sum(
+            t.principal for t in config.tranches
         )
         if total_capital == 0:
             return 0.0
@@ -211,26 +203,19 @@ class CapitalStructureOptimizer:
         # Blended cost of debt
         total_debt = sum(t.principal for t in config.tranches)
         if total_debt == 0:
-            return cost_of_equity * (
-                config.sources_and_uses.equity_contribution / total_capital
-            )
+            return cost_of_equity * (config.sources_and_uses.equity_contribution / total_capital)
 
-        weighted_debt_cost = sum(
-            t.principal * t.interest_rate for t in config.tranches
-        )
+        weighted_debt_cost = sum(t.principal * t.interest_rate for t in config.tranches)
         cost_of_debt = weighted_debt_cost / total_debt
 
         equity_weight = config.sources_and_uses.equity_contribution / total_capital
         debt_weight = total_debt / total_capital
 
-        return (
-            equity_weight * cost_of_equity
-            + debt_weight * cost_of_debt * (1 - config.company.tax_rate)
+        return equity_weight * cost_of_equity + debt_weight * cost_of_debt * (
+            1 - config.company.tax_rate
         )
 
-    def _run_sensitivity_analysis(
-        self, n_points: int = 5
-    ) -> list[dict]:
+    def _run_sensitivity_analysis(self, n_points: int = 5) -> list[dict]:
         """Run sensitivity of IRR to leverage shifts."""
         base_config = self.config
         base_engine = LBOEngine(base_config)

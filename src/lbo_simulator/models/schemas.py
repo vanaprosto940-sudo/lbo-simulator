@@ -13,9 +13,14 @@ class DebtTrancheSchema(BaseModel):
     name: str
     tranche_type: Literal["senior_term_a", "senior_term_b", "mezzanine", "high_yield", "revolver"]
     principal: float = Field(..., gt=0, description="Initial principal amount")
-    interest_rate: float = Field(..., gt=0, description="Annual interest rate (decimal, e.g. 0.075)")
+    interest_rate: float = Field(
+        ..., gt=0, description="Annual interest rate (decimal, e.g. 0.075)"
+    )
     amortization_rate: float = Field(
-        default=0.0, ge=0, le=1, description="Annual amortization rate (fraction of original principal)"
+        default=0.0,
+        ge=0,
+        le=1,
+        description="Annual amortization rate (fraction of original principal)",
     )
     maturity_years: float = Field(..., gt=0, description="Maturity in years")
     cash_sweep_rate: float = Field(
@@ -23,9 +28,13 @@ class DebtTrancheSchema(BaseModel):
     )
     pik_toggle: bool = Field(default=False, description="Payment-in-kind toggle option")
     pik_rate: float = Field(default=0.0, ge=0, description="Additional PIK interest rate")
-    commitment_fee: float = Field(default=0.0, ge=0, description="Commitment fee on undrawn amount (revolver)")
+    commitment_fee: float = Field(
+        default=0.0, ge=0, description="Commitment fee on undrawn amount (revolver)"
+    )
 
-    @field_validator("interest_rate", "amortization_rate", "cash_sweep_rate", "pik_rate", "commitment_fee")
+    @field_validator(
+        "interest_rate", "amortization_rate", "cash_sweep_rate", "pik_rate", "commitment_fee"
+    )
     @classmethod
     def check_rate_range(cls, v: float) -> float:
         if v < 0:
@@ -82,8 +91,12 @@ class ExitAssumptionsSchema(BaseModel):
     hold_period_years: int = Field(default=5, ge=1, le=15, description="Hold period in years")
     exit_ebitda_multiple: float = Field(..., gt=0, description="Exit EBITDA multiple")
     entry_ebitda_multiple: float = Field(..., gt=0, description="Entry EBITDA multiple")
-    terminal_growth_rate: float = Field(default=0.02, ge=0, le=0.05, description="Terminal growth rate (Gordon)")
-    use_terminal_value: bool = Field(default=False, description="Use Gordon terminal value instead of multiple")
+    terminal_growth_rate: float = Field(
+        default=0.02, ge=0, le=0.05, description="Terminal growth rate (Gordon)"
+    )
+    use_terminal_value: bool = Field(
+        default=False, description="Use Gordon terminal value instead of multiple"
+    )
 
 
 class CovenantThresholdsSchema(BaseModel):
@@ -104,10 +117,16 @@ class CompanyProfileSchema(BaseModel):
     initial_revenue: float = Field(..., gt=0, description="Initial annual revenue")
     initial_ebitda_margin: float = Field(..., gt=0, le=1, description="Initial EBITDA margin")
     initial_depreciation: float = Field(default=0, ge=0, description="Initial annual depreciation")
-    revenue_growth_rates: list[float] = Field(default_factory=list, description="Annual revenue growth rates")
-    margin_expansion_bps: list[int] = Field(default_factory=list, description="Annual EBITDA margin expansion in bps")
+    revenue_growth_rates: list[float] = Field(
+        default_factory=list, description="Annual revenue growth rates"
+    )
+    margin_expansion_bps: list[int] = Field(
+        default_factory=list, description="Annual EBITDA margin expansion in bps"
+    )
     capex_pct_revenue: float = Field(default=0.05, ge=0, le=1, description="Capex as % of revenue")
-    nwc_pct_revenue: float = Field(default=0.10, ge=0, le=1, description="Net working capital as % of revenue")
+    nwc_pct_revenue: float = Field(
+        default=0.10, ge=0, le=1, description="Net working capital as % of revenue"
+    )
     tax_rate: float = Field(default=0.25, ge=0, le=1, description="Corporate tax rate")
 
 

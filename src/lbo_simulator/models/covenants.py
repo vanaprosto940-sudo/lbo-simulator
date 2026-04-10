@@ -151,9 +151,7 @@ class CovenantEngine:
             by_year[entry.year]["ending_balance"] += entry.ending_balance
         return by_year
 
-    def _classify_severity(
-        self, actual: float, threshold: float, inverse: bool = False
-    ) -> str:
+    def _classify_severity(self, actual: float, threshold: float, inverse: bool = False) -> str:
         """Classify breach severity.
 
         'warning': within 10% of threshold
@@ -181,9 +179,7 @@ class CovenantEngine:
         }
         return remediations.get(covenant_type, "Review capital structure")
 
-    def get_implied_rating(
-        self, leverage_ratio: float, interest_coverage: float
-    ) -> str:
+    def get_implied_rating(self, leverage_ratio: float, interest_coverage: float) -> str:
         """Proxy rating based on leverage and coverage ratios.
 
         Maps to implied S&P/Fitch bands.

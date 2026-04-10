@@ -17,7 +17,8 @@ def main() -> None:
     """Run capital structure optimization from CLI."""
     parser = argparse.ArgumentParser(description="LBO Capital Structure Optimizer")
     parser.add_argument(
-        "--config", "-c",
+        "--config",
+        "-c",
         type=str,
         default="config/lbo_config.yaml",
         help="Path to YAML config file",
@@ -30,7 +31,8 @@ def main() -> None:
         help="Optimization objective",
     )
     parser.add_argument(
-        "--verbose", "-v",
+        "--verbose",
+        "-v",
         action="store_true",
         help="Enable verbose output",
     )

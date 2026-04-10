@@ -7,7 +7,6 @@ import numpy as np
 from lbo_simulator.data.providers import DataProvider
 from lbo_simulator.models.schemas import CompanyProfileSchema
 
-
 # Sector-typical profiles
 SECTOR_PROFILES = {
     "SaaS": {

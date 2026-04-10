@@ -118,9 +118,17 @@ class ExcelExporter:
 
         # Headers
         headers = [
-            "Year", "Revenue", "EBITDA", "Taxes", "Capex", "ΔNWC",
-            "Unlevered FCF", "Mandatory Amort", "Optional Sweep",
-            "PIK Accrued", "Equity Distribution"
+            "Year",
+            "Revenue",
+            "EBITDA",
+            "Taxes",
+            "Capex",
+            "ΔNWC",
+            "Unlevered FCF",
+            "Mandatory Amort",
+            "Optional Sweep",
+            "PIK Accrued",
+            "Equity Distribution",
         ]
         for col, header in enumerate(headers, 1):
             cell = ws.cell(row=3, column=col, value=header)
@@ -138,10 +146,14 @@ class ExcelExporter:
             ws.cell(row=row, column=5, value=cf.capex).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=6, value=cf.delta_nwc).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=7, value=cf.unlevered_fcf).number_format = self.NUMBER_FMT
-            ws.cell(row=row, column=8, value=cf.mandatory_amortization).number_format = self.NUMBER_FMT
+            ws.cell(row=row, column=8, value=cf.mandatory_amortization).number_format = (
+                self.NUMBER_FMT
+            )
             ws.cell(row=row, column=9, value=cf.optional_sweep).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=10, value=cf.pik_accrued).number_format = self.NUMBER_FMT
-            ws.cell(row=row, column=11, value=cf.equity_distribution).number_format = self.NUMBER_FMT
+            ws.cell(row=row, column=11, value=cf.equity_distribution).number_format = (
+                self.NUMBER_FMT
+            )
 
         # Column widths
         for col in range(1, 12):
@@ -154,8 +166,14 @@ class ExcelExporter:
         ws["A1"].font = self.TITLE_FONT
 
         headers = [
-            "Year", "Tranche", "Beg Balance", "Interest Paid",
-            "Mandatory Amort", "Optional Sweep", "PIK Accrued", "End Balance"
+            "Year",
+            "Tranche",
+            "Beg Balance",
+            "Interest Paid",
+            "Mandatory Amort",
+            "Optional Sweep",
+            "PIK Accrued",
+            "End Balance",
         ]
         for col, header in enumerate(headers, 1):
             cell = ws.cell(row=3, column=col, value=header)
@@ -169,7 +187,9 @@ class ExcelExporter:
             ws.cell(row=row, column=2, value=ds.tranche_name)
             ws.cell(row=row, column=3, value=ds.beginning_balance).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=4, value=ds.interest_paid).number_format = self.NUMBER_FMT
-            ws.cell(row=row, column=5, value=ds.mandatory_amortization).number_format = self.NUMBER_FMT
+            ws.cell(row=row, column=5, value=ds.mandatory_amortization).number_format = (
+                self.NUMBER_FMT
+            )
             ws.cell(row=row, column=6, value=ds.optional_sweep).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=7, value=ds.pik_accrued).number_format = self.NUMBER_FMT
             ws.cell(row=row, column=8, value=ds.ending_balance).number_format = self.NUMBER_FMT
@@ -211,6 +231,6 @@ class ExcelExporter:
             severity_cell.fill = PatternFill(
                 start_color=severity_colors.get(breach.severity, "CCCCCC"),
                 end_color=severity_colors.get(breach.severity, "CCCCCC"),
-                fill_type="solid"
+                fill_type="solid",
             )
             ws.cell(row=row, column=6, value=breach.remediation_applied)
