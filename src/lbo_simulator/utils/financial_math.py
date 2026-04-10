@@ -5,9 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 
-def xirr(
-    cash_flows: list[float], dates: list[float], guess: float = 0.1
-) -> float:
+def xirr(cash_flows: list[float], dates: list[float], guess: float = 0.1) -> float:
     """Calculate Internal Rate of Return using XNPV method.
 
     Args:
